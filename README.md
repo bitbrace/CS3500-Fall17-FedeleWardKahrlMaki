@@ -1,2 +1,11 @@
 # CS3500-Fall17-FedeleWardKahrl
-Web Tech Final Team Project
+## Intro. to Web Technologies
+Prof. Li Yang
+
+## Final Team Project
+due 2017-12-05
+
+## Team
+Stephen Fedele
+James Ward
+Allin Kahrl
