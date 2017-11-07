@@ -6,6 +6,8 @@ Prof. Li Yang
 due 2017-12-05
 
 ## Team
-Stephen Fedele
-James Ward
-Allin Kahrl
+
+* Stephen Fedele
+* James Ward
+* Allin Kahrl
+* Kristina Maki
