@@ -10,23 +10,23 @@ insert into OSMapping (osName) values ('windows'), ('ios'), ('ubuntu'), ('kali')
 
 insert into browserMapping (browName) values ('firefox'), ('chrome'), ('chromium'), ('internet explorer'), ('edge'), ('safari'), ('opera');
 
-insert into tagMapping (tag) values ('like'), ('the'), ('a'), ('under'), ('my'), ('i'), ('tried'), ('to');
+insert into tagMapping (tag) values ('like'), ('the'), ('a'), ('under'), ('my'), ('i'), ('tried'), ('to'), ('with');
 
 insert into suggMapping (suggText) values ('stop'), ('find another profession'), ('turning it off and on again');
 
 -- Below are some sample rows for the larger tables.
 -- These are a little stricter, be careful with what you add...
 
-insert into users (username, password) values ('admin', '######');
+insert into user (username, password) values ('admin', 'pswd');
 
-insert into ticket (uid, tstate, pType, userDesc) values (0, 0, 0, 'i dunno what to do!');
+insert into ticket (uid, tstate, pType, userDesc) values (1, 1, 1, 'i dunno what to do!');
 
 insert into solutionFilter (problem, OS, browser, tag, suggid) 
 values 
-(0,0,0,'like',0),
-(0,1,0,'a',0),
-(0,0,1,'under',1),
-(1,0,0,'the',1),
-(0,1,1,'the',0),
-(1,0,1,'under',2),
-(1,1,1,'with',2);
+(1,1,1,1,1),
+(1,2,1,'2',1),
+(1,1,2,3,2),
+(2,1,1,4,2),
+(1,2,2,5,1),
+(2,1,2,6,3),
+(2,2,2,7,3);
