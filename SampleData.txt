@@ -2,7 +2,7 @@
 
 insert into stateMapping (stateName) values ('open'), ('closed'), ('pending');
 
-insert into problemMapping (probName) values ('i can't find the outlet'), ('my computer won't start'), ('i'm lost');
+insert into problemMapping (probName) values ('i can''t find the outlet'), ('my computer won''t start'), ('i''m lost');
 
 insert into OSMapping (osName) values ('windows'), ('ios'), ('ubuntu'), ('kali');
 
