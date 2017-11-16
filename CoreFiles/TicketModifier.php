@@ -8,7 +8,14 @@ $host='localhost';
 
 $dbConn= "mysql:host=$host;dbname=$db;";
 
-$pdo = new PDO($dbConn, $user, $pass) or die("Failed to connect to the database..");
+try {
+	$pdo = new PDO($dbConn, $user, $pass);	
+} 
+catch (PDOException $e){
+	$errorMgs = $e->getMessage();
+	echo("Failed to connect to database, " . $errorMgs);
+}
+
 
 ?>
 
@@ -19,7 +26,7 @@ $pdo = new PDO($dbConn, $user, $pass) or die("Failed to connect to the database.
 </head>
 <body>
 
-	<div class="container">
+	<div class="container-fluid">
 
 	<header><h1>This is a temp header</h1></header>
 	<!--Include header here-->
@@ -29,37 +36,39 @@ $pdo = new PDO($dbConn, $user, $pass) or die("Failed to connect to the database.
 			// The user wants to modify a ticket(s),
 			// print out info for the ticket(s).
 
+			$stmt = $pdo->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_GET['tid']) . ") AND T.uid = :user");
 
+			//$str = implode(', ',$_GET['tid']);
 
-			$stmt = $pdo->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid = :ticket AND T.uid = :user");
-			$stmt->bindParam(':ticket', $_GET['tid'], PDO::PARAM_STR);
+			//$stmt->bindParam(':ticket', $str, PDO::PARAM_INT);
 			$stmt->bindParam(':user', $_GET['uid'], PDO::PARAM_STR);
+
 			$stmt->execute();
 
-			//Just one row for now
-			$row = $stmt->fetch();
-			echo("
-				<form action='Dashboard.php' method='GET'>
-				<fieldset>
-				<legend>Modify ticket #{$row[0]}</legend>
-				User: {$row[1]}<br>
-				Status: {$row[2]}<br>
-				<label for='prob'>Problem</label>
-				<select name='ptype' id='prob'>
-			");
+			while($row = $stmt->fetch()){
+				echo("
+					<form action='Dashboard.php' method='GET'>
+					<fieldset>
+					<legend>Modify ticket #{$row[0]}</legend>
+					User: {$row[1]}<br>
+					Status: {$row[2]}<br>
+					<label for='prob'>Problem</label>
+					<select name='ptype' id='prob'>
+				");
 
-			$probs = $pdo->query("SELECT * FROM problemmapping");
-			while($pRows = $probs->fetch()){
-				echo("<option value={$pRows[0]}>{$pRows[1]}</option>");
+				$probs = $pdo->query("SELECT * FROM problemmapping");
+				while($pRows = $probs->fetch()){
+					echo("<option value={$pRows[0]}>{$pRows[1]}</option>");
+				}
+
+				echo("
+					</select><br>
+					<label for='desc'>Further Decription</label>
+					<input type='text' name='userDesc' id='desc' value='". $row[4] ."'><br>
+					<input type='Submit' name='sub' value='Update Ticket'>
+					</fieldset>
+				");
 			}
-
-			echo("
-				</select><br>
-				<label for='desc'>Further Decription</label>
-				<input type='text' name='userDesc' id='desc' value='". $row[4] ."'><br>
-				<input type='Submit' name='sub' value='Update Ticket'>
-				</fieldset>
-			");
 
 		}else{
 			// The user wants to create a new ticket
@@ -91,6 +100,7 @@ $pdo = new PDO($dbConn, $user, $pass) or die("Failed to connect to the database.
 		$pdo=null;
 	?>
 
+	<button onclick="Dashboard.php">Back to Dashboard</button>
 
 	<header><h1>This is a temp footer</h1></header>
 	<!--Include footer here-->
