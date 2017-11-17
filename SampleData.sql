@@ -1,4 +1,4 @@
--- use cs3500finalproj
+USE cs3500FinalProj;
 
 -- Here is a datadump for our database mappings, feel free to add some mappings!
 
