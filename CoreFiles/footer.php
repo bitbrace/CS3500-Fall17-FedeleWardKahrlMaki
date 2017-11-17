@@ -1,5 +1,4 @@
 <footer>
-    <p>Stuff above - (get rid of this)</p>
     <div class="container">
         <div style='border-top:1px solid #ccc;'></div>
         <div>
