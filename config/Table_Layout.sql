@@ -5,8 +5,19 @@ USE cs3500FinalProj;
 CREATE TABLE user (
 	uid		INT AUTO_INCREMENT,
 	username	VARCHAR(50) NOT NULL,
-	password	VARCHAR(50) NOT NULL,
+	password	CHAR(128) NOT NULL,	-- For a messy hash with SHA2-512 giving the output
+	salt		CHAR(32) NOT NULL,	-- For an MD5 salt
 	PRIMARY KEY (uid)
+);
+
+CREATE TABLE sessionMapping (
+	sid		INT,
+	uid		INT,
+	expires		DATETIME,
+	PRIMARY KEY (sid),
+	FOREIGN KEY (uid) REFERENCES user(uid)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE OSMapping (

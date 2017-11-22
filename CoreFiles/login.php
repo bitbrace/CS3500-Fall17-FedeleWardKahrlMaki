@@ -1,6 +1,8 @@
 <?php
+	
 	require_once "etc.php";
 	require_once "database.php";
+	require_once "authenticate.php";
 	
 	$failed="";
 	
@@ -31,25 +33,28 @@
 		}
 	}
 	
-	echo	"<!DOCTYPE html>
-		<html>
-			<head>";
-	//IMPORTANT PAGE STUFF GOES HERE
-	echo		"</head>
-			<body>";
-	echo			"<header><h1>INCLUDE HEADER HERE</h1></header>";
-	echo			"<form class='center middle' action='login.php' method='POST'>
-					<fieldset>
-						<img class='middle' src='FIXME'/>
-						<p>Username:</p>
-						<input type='text' name='username' value=''>
-						<p>Password:</p>
-						<input type='text' name='password' value=''>
-						<input type='submit' value='Log In'>
-						$failed
-					<fieldset>
-				</form>";
-	echo			"<footer><h1>INCLUDE FOOTER HERE</h1></footer>";
-	echo		"</body>
-		</html>";
-	
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+	<!--IMPORTANT PAGE STUFF GOES HERE-->
+	</head>
+	<body>
+		<?php include "header.php";//INCLUDE HEADER ?>
+		<form class='center middle' action='authenticate.php' method='POST'>
+			<fieldset>
+				<img class='middle' src='FIXME'/>
+				<p>Username:</p>
+				<input type='text' name='username' value=''>
+				<p>Password:</p>
+				<input type='text' name='password' value=''>
+				<input type='submit' value='Log In'>
+				<?php echo $failed;?>
+			<fieldset>
+		</form>
+		<?php include "footer.php";//INCLUDE FOOTER ?>
+	</body>
+</html>
+
+<?php
