@@ -11,7 +11,7 @@ CREATE TABLE user (
 
 CREATE TABLE OSMapping (
 	osid		INT AUTO_INCREMENT,
-	osName		VARCHAR(50),
+	osName		VARCHAR(100),
 	PRIMARY KEY (osid)
 );
 
@@ -35,13 +35,13 @@ CREATE TABLE suggMapping (
 
 CREATE TABLE stateMapping (
 	tstate		INT AUTO_INCREMENT,
-	stateName	VARCHAR(50),
+	stateName	VARCHAR(100),
 	PRIMARY KEY (tstate)
 );
 
 CREATE TABLE problemMapping (
 	pid		INT AUTO_INCREMENT,
-	probName	VARCHAR(20),
+	probName	VARCHAR(100),
 	PRIMARY KEY (pid)
 );
 
