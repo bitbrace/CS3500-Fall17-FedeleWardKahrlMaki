@@ -1,0 +1,12 @@
+/* 
+Use this file to style any extra/special casses. Please do not modify someone 
+else's style, instead use a id or class.
+*/
+
+form {
+	margin: 2em;
+}
+
+.green{
+	background-color: green;
+}

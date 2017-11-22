@@ -1,21 +1,13 @@
 <?php
 
-// Create a connection to the database
-$user='root';
-$pass='';
-$db='cs3500finalproj';
-$host='localhost';
+// Connect to the database, referrence object is named '$database'
+include "../Resources/connectToDB.php";
 
-$dbConn= "mysql:host=$host;dbname=$db;";
+// Get user system info mapping functions
+include "../Resources/getUserSystemInfo.php";
 
-try {
-	$pdo = new PDO($dbConn, $user, $pass);	
-} 
-catch (PDOException $e){
-	$errorMgs = $e->getMessage();
-	echo("Failed to connect to database, " . $errorMgs);
-}
-
+// Validation functions
+include "../Resources/validateTicket.php";
 
 ?>
 
@@ -23,20 +15,25 @@ catch (PDOException $e){
 <html lang="en">
 <head>
 	<title>Ticket Modifier</title>
+	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
+
+	<!--Used to fade update bannder-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
-	<div class="container-fluid">
+	<?php include "header.php"; ?>
 
-	<header><h1>This is a temp header</h1></header>
-	<!--Include header here-->
+	<div class="container">
 
 	<?php
+
 		if (isset($_GET['uid']) AND isset($_GET['tid'])){
 			// The user wants to modify a ticket(s),
 			// print out info for the ticket(s).
 
-			$stmt = $pdo->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_GET['tid']) . ") AND T.uid = :user");
+			$stmt = $database->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_GET['tid']) . ") AND T.uid = :user");
 
 			//$str = implode(', ',$_GET['tid']);
 
@@ -46,67 +43,96 @@ catch (PDOException $e){
 			$stmt->execute();
 
 			while($row = $stmt->fetch()){
-				echo("
-					<form action='Dashboard.php' method='GET'>
+				echo("<div class='well'>
+					<form action='' method='GET'>
 					<fieldset>
 					<legend>Modify ticket #{$row[0]}</legend>
-					User: {$row[1]}<br>
-					Status: {$row[2]}<br>
+					<input type='hidden' name='tid[]' value='".$row[0]."'>
+					<label>User:</label> {$row[1]}<br>
+					<input type='hidden' name='uid' value='".$_GET['uid']."'>
+					<label>Status:</label> {$row[2]}<br>
 					<label for='prob'>Problem</label>
 					<select name='ptype' id='prob'>
 				");
 
-				$probs = $pdo->query("SELECT * FROM problemmapping");
+				$probs = $database->query("SELECT * FROM problemmapping");
 				while($pRows = $probs->fetch()){
-					echo("<option value={$pRows[0]}>{$pRows[1]}</option>");
+					// Displays the current problem for the ticket
+					if ($pRows[1] == $row[3]){
+						echo("<option value='".$pRows[0]."' selected>{$pRows[1]}</option>");
+					}else{
+						echo("<option value='".$pRows[0]."'>{$pRows[1]}</option>");
+					}			
 				}
 
 				echo("
 					</select><br>
-					<label for='desc'>Further Decription</label>
-					<input type='text' name='userDesc' id='desc' value='". $row[4] ."'><br>
-					<input type='Submit' name='sub' value='Update Ticket'>
+					
+					<label>For system:&nbsp</label>". getOS() .", ". getBrowser() .", ". getIPAddr() ."<br>
+
+					<label for='desc'>Further Decription (max 100 characters)</label><br>
+					<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc'>". $row[4] ." </textarea><br>
+					<input type='Submit' name='subUpdate' value='Update Ticket'>
 					</fieldset>
+					</form>
+
+					<form action='suggestions.php' method='GET'>
+					<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
+					<input type='hidden' name='tid[]' value='". $row[0] ."'>
+					<input type='Submit' name='subView' value='View Suggestions'>
+					</form>
+
+					</div>
 				");
 			}
 
-		}else{
+		}else if (isset($_GET['uid'])) {
 			// The user wants to create a new ticket
 			
-			echo("
-				<form action='Suggestions.php' method='GET'>
+			echo("<div class='well'>
+				<form action='' method='GET'>
 				<fieldset>
 				<legend>Create a new ticket:</legend>
 				<label for='prob'>Problem</label>
 				<select name='ptype' id='prob'>
 				");
 
-		  	$stmt = $pdo->query("SELECT * FROM problemmapping");
+		  	$stmt = $database->query("SELECT * FROM problemmapping");
 			while($row = $stmt->fetch()){
 				echo("<option value={$row[0]}>{$row[1]}</option>");
 			}
 
-			echo('
+			echo("
 				</select><br>
-				<label for="desc">Further Decription</label>
-				<input type="text" name="userDesc" id="desc"><br>
-				<input type="Submit" name="sub" value="Create Ticket">
+
+				<label>For system:&nbsp</label>". getOS() .", ". getBrowser() .", ". getIPAddr() ."<br>
+
+
+				<label for='desc'>Further Decription (max 100 characters)</label><br>
+				<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc'> </textarea><br>
+				<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
+				<input type='Submit' name='subCreate' value='Create Ticket'>
 				</fieldset>
 				</form>
-				');
+				</div>
+				");
+		}else{
+			echo("<div class='alert alert-danger'>Failed to get user or ticket info from server.</div>");
 		}
 
+		// Back button includes uid for dashboard
+		echo("<div class='well'><form action='dashboard.php' method='GET'>
+		<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
+		<input type='Submit' name='sub' value='Return to Dashboard'></form></div>");
+
 		//trash the db connection
-		$pdo=null;
+		$database=null;
 	?>
-
-	<button onclick="Dashboard.php">Back to Dashboard</button>
-
-	<header><h1>This is a temp footer</h1></header>
-	<!--Include footer here-->
-
+	
 	<!--End of the container-->
 	</div>
+
+	<?php include "footer.php";?>
 
 </body>
 </html>
