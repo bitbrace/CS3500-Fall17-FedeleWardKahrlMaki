@@ -3,7 +3,7 @@
 	require_once "database.php";
 	require_once "authenticate.php";
 	
-	$cleanchance=1;//The chance that the server will clean up expired cookies in the database
+	$cleanchance=32;//The chance that the server will clean up expired cookies in the database
 	$domainName=(isset($_SERVER["HTTP_HOST"])?$_SERVER["HTTP_HOST"]:$_SERVER["SERVER_NAME"]);
 	
 	function errpage($err="Unknown error"){

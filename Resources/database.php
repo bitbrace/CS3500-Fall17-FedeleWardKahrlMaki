@@ -1,4 +1,5 @@
 <?php
+	
 	require_once "etc.php";
 	
 	$dbusername="root";
@@ -18,7 +19,7 @@
 		return $database;
 	}
 	
-	function rolldie($msg){
+	function rolldie($msg=""){
 		global $database;
 		try{
 			if(!$database->rollback()) throw new Exception("",0);

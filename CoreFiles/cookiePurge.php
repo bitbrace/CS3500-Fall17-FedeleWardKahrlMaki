@@ -1,3 +1,4 @@
 <?php
 	
 	setcookie('sessionID',null);
+	
