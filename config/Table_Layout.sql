@@ -13,7 +13,7 @@ CREATE TABLE user (
 CREATE TABLE sessionMapping (
 	sid		INT,
 	uid		INT,
-	expires		DATETIME,
+	expires		INT,
 	PRIMARY KEY (sid),
 	FOREIGN KEY (uid) REFERENCES user(uid)
 		ON DELETE CASCADE

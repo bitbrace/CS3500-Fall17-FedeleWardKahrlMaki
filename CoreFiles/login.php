@@ -11,19 +11,22 @@
 		$sid=true;
 		if(isset($_COOKIE["sessionID"])){
 			list($sid,$exp)=updateSession($_COOKIE["sessionID"]);
-		}else if(isset($_POST["username"])
+		}
+		
+		if(($sid===true||$sid===false)
+		&&isset($_POST["username"])
 		&&isset($_POST["password"])){
 			list($sid,$exp)=createSession(authenticate($_POST["username"],$_POST["password"]),600);
 		}
 		
 		if($sid===false){
-			$notice="<p>Error: couldn't validate credentials.</p>";
+			$notice.="<p>Error: couldn't validate credentials.</p>";
 		}else if($sid!==true){
 			setcookie("sessionID",$sid,$exp,"/",$domainName,true,true);
 			//Information on redirection taken from: https://stackoverflow.com/a/768472
 //			header("Location: dashboard.php",true,303);//303 is the HTTP redirection code
 			header("Location: dumpvars.php",true,303);//303 is the HTTP redirection code
-//			$notice="<p><a href='dumpvars.php'>dumpvars.php</a></p>";
+//			$notice.="<p><a href='dumpvars.php'>dumpvars.php</a></p>";
 			exit(0);
 		}
 	}else{

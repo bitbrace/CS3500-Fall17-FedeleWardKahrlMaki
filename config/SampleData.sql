@@ -1,5 +1,6 @@
-/*
 USE cs3500FinalProj;
+
+/*
 Here is a datadump for our database mappings, feel free to add some mappings!
 */
 
@@ -71,10 +72,22 @@ insert into suggMapping (suggText) values
 /*Below are some sample rows for the larger tables.
 These are a little stricter, be careful with what you add...*/
 
-insert into user (username, password) values 
-	('admin', 'pswd'),
-	('Jane', 'supersecret'),
-	('John', 'help101');
+insert into user (uid, username, salt) values 
+	(1, 'admin', MD5('lorem ipsum dolor sit amet')),
+	(2, 'Jane', MD5('lorem ipsum dolor sit amet')),
+	(3, 'John', MD5('lorem ipsum dolor sit amet'));
+
+update user
+set password = SHA2(MD5(CONCAT('pswd', salt)), 512)
+where uid = 1;
+
+update user
+set password = SHA2(MD5(CONCAT('supersecret', salt)), 512)
+where uid = 2;
+
+update user
+set password = SHA2(MD5(CONCAT('help101', salt)), 512)
+where uid = 3;
 
 insert into ticket (uid, tstate, pType, userDesc) values 
 	(1, 1, 1, 'I dunno what to do!'), 

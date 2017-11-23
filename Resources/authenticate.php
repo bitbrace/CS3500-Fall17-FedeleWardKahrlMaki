@@ -39,10 +39,8 @@
 		try{
 			$temp=true;
 			for($sid=random_int(0,2147483647);	//Gets a random number that'll fit in a MariaDB BIGINT
-			$temp!==false;				//
-			$sid=random_int(0,2147483647)){		//
-				$temp=recall($sid);
-			}
+			false!==($temp=recall($sid));		//
+			$sid=random_int(0,2147483647));		//
 			
 			if($atom
 			&&!$database->beginTransaction()) throw new Exception("An unexpected error occured.",0);
@@ -140,15 +138,13 @@
 	
 	//Takes a session ID and renew the expiration date to 'duration' seconds
 	//Only does something if 'oldsid' is a real session
-	function updateSession($oldsid,$duration=600){
-		$newsid=[false,$duration];
+	function updateSession($oldsid,$duration=600,$atom=true){
+		$tempsid=$newsid=[false,$duration];
 		if($oldsid===false){
 			return $newsid;
 		}
 		global $database;
 		try{
-			
-			$tempsid=[false,$duration];
 			if(false!==($uid=recall($oldsid))){
 				if($atom
 				&&!$database->beginTransaction()) throw new Exception("An unexpected error occured.",0);
@@ -164,6 +160,6 @@
 		}catch(Throwable $e){
 			rolldie();
 		}
-	return;
+		return $newsid;
 	}
 	
