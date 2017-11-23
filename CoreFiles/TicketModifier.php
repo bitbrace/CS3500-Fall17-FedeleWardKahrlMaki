@@ -6,9 +6,6 @@ include "../Resources/connectToDB.php";
 // Get user system info mapping functions
 include "../Resources/getUserSystemInfo.php";
 
-// Validation functions
-include "../Resources/validateTicket.php";
-
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +17,7 @@ include "../Resources/validateTicket.php";
 
 	<!--Used to fade update bannder-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../Resources/validateTicketForms.js"></script>
 </head>
 <body>
 
@@ -29,17 +27,16 @@ include "../Resources/validateTicket.php";
 
 	<?php
 
+		// Submit tickets to the database and print results if any
+		include "../Resources/submitTicketUpdate.php";
+
 		if (isset($_GET['uid']) AND isset($_GET['tid'])){
 			// The user wants to modify a ticket(s),
 			// print out info for the ticket(s).
 
 			$stmt = $database->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_GET['tid']) . ") AND T.uid = :user");
 
-			//$str = implode(', ',$_GET['tid']);
-
-			//$stmt->bindParam(':ticket', $str, PDO::PARAM_INT);
 			$stmt->bindParam(':user', $_GET['uid'], PDO::PARAM_STR);
-
 			$stmt->execute();
 
 			while($row = $stmt->fetch()){
@@ -47,10 +44,23 @@ include "../Resources/validateTicket.php";
 					<form action='' method='GET'>
 					<fieldset>
 					<legend>Modify ticket #{$row[0]}</legend>
-					<input type='hidden' name='tid[]' value='".$row[0]."'>
 					<label>User:</label> {$row[1]}<br>
-					<input type='hidden' name='uid' value='".$_GET['uid']."'>
-					<label>Status:</label> {$row[2]}<br>
+					<label for='status'>Status</label>
+					<select name='status' id='status'>
+					");
+
+				$states = $database->query("SELECT * FROM statemapping");
+				while($pRows = $states->fetch()){
+					// Displays the current problem for the ticket
+					if ($pRows[1] == $row[2]){
+						echo("<option value='".$pRows[0]."' selected>{$pRows[1]}</option>");
+					}else{
+						echo("<option value='".$pRows[0]."'>{$pRows[1]}</option>");
+					}			
+				}
+
+				echo("
+					</select><br>
 					<label for='prob'>Problem</label>
 					<select name='ptype' id='prob'>
 				");
@@ -70,15 +80,24 @@ include "../Resources/validateTicket.php";
 					
 					<label>For system:&nbsp</label>". getOS() .", ". getBrowser() .", ". getIPAddr() ."<br>
 
-					<label for='desc'>Further Decription (max 100 characters)</label><br>
-					<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc'>". $row[4] ." </textarea><br>
-					<input type='Submit' name='subUpdate' value='Update Ticket'>
+					<label for='desc'>Further Decription (max 100 characters)</label>
+					<span class='error' hidden></span>
+					<br>
+					<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc' class='inline' required>". $row[4] ." </textarea>
+					<br>
+
+					<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
+					<input type='hidden' name='tid[]' value='". implode(', ',$_GET['tid']) ."'>
+
+					<input type='hidden' name='subUpdate' value='". $row[0] ."'>
+
+					<input type='Submit' value='Update Ticket'>
 					</fieldset>
 					</form>
 
 					<form action='suggestions.php' method='GET'>
 					<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
-					<input type='hidden' name='tid[]' value='". $row[0] ."'>
+					<input type='hidden' name='tid[]' value='".$row[0]."'>
 					<input type='Submit' name='subView' value='View Suggestions'>
 					</form>
 
@@ -107,11 +126,14 @@ include "../Resources/validateTicket.php";
 
 				<label>For system:&nbsp</label>". getOS() .", ". getBrowser() .", ". getIPAddr() ."<br>
 
-
-				<label for='desc'>Further Decription (max 100 characters)</label><br>
-				<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc'> </textarea><br>
+				<label for='desc'>Further Decription (max 100 characters)</label>
+				<span class='error' hidden></span>
+				<br>
+				<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc' required> </textarea>
+				<br>
 				<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
-				<input type='Submit' name='subCreate' value='Create Ticket'>
+				<input type='hidden' name='subCreate'>
+				<input type='Submit' value='Create Ticket'>
 				</fieldset>
 				</form>
 				</div>

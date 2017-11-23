@@ -7,6 +7,12 @@ form {
 	margin: 2em;
 }
 
+.error {
+	background-color: red;
+	color: white;
+	padding: 0em 1em;
+}
+
 .green{
 	background-color: green;
 }
