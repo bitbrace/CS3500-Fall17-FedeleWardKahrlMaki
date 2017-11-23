@@ -13,5 +13,11 @@
 		echo "<p>$key => $value</p>";
 			}
 		?>
+		<h1>COOKIES:</h1>
+		<?php
+			foreach($_COOKIE as $key=>$value){
+		echo "<p>$key => $value</p>";
+			}
+		?>
 	<body>
 </html>

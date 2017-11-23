@@ -3,28 +3,31 @@
 	require_once "../Resources/etc.php";
 	require_once "../Resources/authenticate.php";
 	
-	$failed="";
+	startup();
 	
-	$session=$_COOKIE["sessionID"];
-	$username=$_POST["username"];
-	$password=$_POST["password"];
+	$notice="";
 	
-	$sid=true;
-	if(isset($_COOKIE["sessionID"])){
-		list($sid,$exp)=updateSession($session);
-	}else if(isset($username)
-	&&isset($password)){
-		list($sid,$exp)=createSession(authenticate($username,$password),600);
-	}
-	
-	if($sid===false){
-		$failed.="<p>Error: couldn't validate credentials.</p>";
-	}else if($sid!==true){
-		setcookie("sessionID",$sid,$exp,"/",$domainName,true,true);
-		//Information on redirection taken from: https://stackoverflow.com/a/768472
-//		header("Location: dashboard.php",true,303);//303 is the HTTP redirection code
-		header("Location: dumpvars.php",true,303);//303 is the HTTP redirection code
-		exit(0);
+	if($_SERVER["HTTPS"]){
+		$sid=true;
+		if(isset($_COOKIE["sessionID"])){
+			list($sid,$exp)=updateSession($_COOKIE["sessionID"]);
+		}else if(isset($_POST["username"])
+		&&isset($_POST["password"])){
+			list($sid,$exp)=createSession(authenticate($_POST["username"],$_POST["password"]),600);
+		}
+		
+		if($sid===false){
+			$notice="<p>Error: couldn't validate credentials.</p>";
+		}else if($sid!==true){
+			setcookie("sessionID",$sid,$exp,"/",$domainName,true,true);
+			//Information on redirection taken from: https://stackoverflow.com/a/768472
+//			header("Location: dashboard.php",true,303);//303 is the HTTP redirection code
+			header("Location: dumpvars.php",true,303);//303 is the HTTP redirection code
+//			$notice="<p><a href='dumpvars.php'>dumpvars.php</a></p>";
+			exit(0);
+		}
+	}else{
+		$notice="<p>You cannot login with an insecure connection.</p>";
 	}
 	
 ?>
@@ -36,7 +39,7 @@
 	</head>
 	<body>
 		<?php include "header.php";//INCLUDE HEADER ?>
-		<form class='center middle' action='authenticate.php' method='POST'>
+		<form class='center middle' action='login.php' method='POST'>
 			<fieldset>
 				<img class='middle' src='FIXME'/>
 				<p>Username:</p>
@@ -44,7 +47,7 @@
 				<p>Password:</p>
 				<input type='text' name='password' value=''>
 				<input type='submit' value='Log In'>
-				<?php echo $failed;?>
+				<?php echo $notice;?>
 			<fieldset>
 		</form>
 		<?php include "footer.php";//INCLUDE FOOTER ?>

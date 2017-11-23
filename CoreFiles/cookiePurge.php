@@ -1,0 +1,3 @@
+<?php
+	
+	setcookie('sessionID',null);
