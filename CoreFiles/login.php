@@ -1,36 +1,30 @@
 <?php
 	
-	require_once "etc.php";
-	require_once "database.php";
-	require_once "authenticate.php";
+	require_once "../Resources/etc.php";
+	require_once "../Resources/authenticate.php";
 	
 	$failed="";
 	
-	if(isset($_POST["username"])
-	&&isset($_POST["password"])){
-		
-		try{
-			$database=initdb();
-			$statement=$database->prepare("
-			SELECT DISTINCT(uid)
-			FROM user
-			WHERE username = :u AND password = :p");
-			$statement->bindParam(":u",$_POST["username"],PDO::PARAM_STR);
-			$statement->bindParam(":p",$_POST["password"],PDO::PARAM_STR);
-			$statement->execute();
-			$uid=$statement->fetch();
-		}catch(Exception $e){
-			errdie();
-		}
-		
-		if($uid){
-			//Information on redirection taken from: https://stackoverflow.com/a/768472
-			$redir="dashboard.php?uid=".$uid;//Can't use __DIR__ since it gives the full pathname (which shouldn't be revealed and doesn't work with the server's hierarchy)
-			header("Location: ".$redir,true,303);
-			exit(0);
-		}else{
-			$failed.="<p>Error: couldn't validate credentials.</p>";
-		}
+	$session=$_COOKIE["sessionID"];
+	$username=$_POST["username"];
+	$password=$_POST["password"];
+	
+	$sid=true;
+	if(isset($_COOKIE["sessionID"])){
+		list($sid,$exp)=updateSession($session);
+	}else if(isset($username)
+	&&isset($password)){
+		list($sid,$exp)=createSession(authenticate($username,$password),600);
+	}
+	
+	if($sid===false){
+		$failed.="<p>Error: couldn't validate credentials.</p>";
+	}else if($sid!==true){
+		setcookie("sessionID",$sid,$exp,"/",$domainName,true,true);
+		//Information on redirection taken from: https://stackoverflow.com/a/768472
+//		header("Location: dashboard.php",true,303);//303 is the HTTP redirection code
+		header("Location: dumpvars.php",true,303);//303 is the HTTP redirection code
+		exit(0);
 	}
 	
 ?>
