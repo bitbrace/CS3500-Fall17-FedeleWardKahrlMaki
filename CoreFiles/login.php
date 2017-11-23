@@ -7,7 +7,7 @@
 	
 	$notice="";
 	
-	if($_SERVER["HTTPS"]){
+	if(isset($_SERVER["HTTPS"])){
 		$sid=true;
 		if(isset($_COOKIE["sessionID"])){
 			list($sid,$exp)=updateSession($_COOKIE["sessionID"]);

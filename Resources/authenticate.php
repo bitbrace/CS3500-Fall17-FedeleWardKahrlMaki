@@ -31,11 +31,11 @@
 	//Returns a new session ID and the expiry time given a user ID which should expire after 'duration' seconds
 	//(The expiry time is needed for synchronization)
 	function createSession($uid,$duration=600,$atom=true){
+		$duration+=time();
 		if($uid===false){
 			return [false,$duration];
 		}
 		global $database;
-		$duration+=time();
 		try{
 			$temp=true;
 			for($sid=random_int(0,2147483647);	//Gets a random number that'll fit in a MariaDB BIGINT
@@ -136,30 +136,30 @@
 		return $uid;
 	}
 	
-	//Takes a session ID and renew the expiration date to 'duration' seconds
-	//Only does something if 'oldsid' is a real session
-	function updateSession($oldsid,$duration=600,$atom=true){
-		$tempsid=$newsid=[false,$duration];
-		if($oldsid===false){
-			return $newsid;
+	//Takes a session ID and renew the expiration time to 'duration' seconds from now (assuming it hasn't expired already)
+	function updateSession($sid,$duration=600,$atom=true){
+		$duration+=time();
+		if($sid===false){
+			return [false,$duration];
 		}
 		global $database;
 		try{
-			if(false!==($uid=recall($oldsid))){
-				if($atom
-				&&!$database->beginTransaction()) throw new Exception("An unexpected error occured.",0);
-				
-				$tempsid=createSession($uid,$duration,false);
-				deleteSession($oldsid,false);
-				
-				if($atom
-				&&!$database->commit()) throw new Exception("An unexpected error occured.",0);
-			}
+			if($atom
+			&&!$database->beginTransaction()) throw new Exception("An unexpected error occured.",0);
 			
-			$newsid=$tempsid;
+			$statement=$database->prepare("
+			UPDATE sessionMapping
+			SET expires = :exp
+			WHERE sid = :sid AND NOT expires < UNIX_TIMESTAMP();");
+			$statement->bindParam(":exp",$duration,	PDO::PARAM_INT);
+			$statement->bindParam(":sid",$sid,	PDO::PARAM_INT);
+			$statement->execute();
+			
+			if($atom
+			&&!$database->commit()) throw new Exception("An unexpected error occured.",0);
 		}catch(Throwable $e){
 			rolldie();
 		}
-		return $newsid;
+		return [$sid,$duration];
 	}
 	

@@ -1,4 +1,4 @@
-etc.php README
+Resources/etc.php README
 
 Description:----------------------------------------------------------------------------------------------------------------------
 
@@ -6,7 +6,8 @@ This page is intended to provide misc functions for site-wide use (at your discr
 
 Requires:-------------------------------------------------------------------------------------------------------------------------
 
-N/A
+Resources/database.php
+Resources/authenticate.php
 
 Input:----------------------------------------------------------------------------------------------------------------------------
 
@@ -18,4 +19,7 @@ This page produces no output.
 
 Provides:-------------------------------------------------------------------------------------------------------------------------
 
-This page provides the function 'errpage' for generating an error page with a message of your choice.
+Function: 'errpage' for generating an error page with a message of your choice.
+Function: 'startup' for initializing the database and performing periodic cleanup of stale data
+
+Variable: 'domainName', which should contain the domain name of the server itself (details get messy)
