@@ -99,7 +99,7 @@ include "../Resources/getUserSystemInfo.php";
 
 					<form action='suggestions.php' method='GET'>
 					<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
-					<input type='hidden' name='tid[]' value='".$row[0]."'>
+					<input type='hidden' name='tid' value='".$row[0]."'>
 					<input type='Submit' name='subView' value='View Suggestions'>
 					</form>
 
