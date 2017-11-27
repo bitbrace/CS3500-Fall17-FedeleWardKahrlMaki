@@ -39,7 +39,7 @@ include "../Resources/database.php";
 					if (isset($_GET['uid'])) {
 						// The user wants to see their list of tickets
 
-						$userCheck = $database->query("SELECT * FROM user WHERE uid = " . $_GET['uid']);
+						$userExists = $database->query("SELECT * FROM user WHERE uid = " . $_GET['uid']);
 						$tix = $database->query("SELECT * FROM ticket WHERE uid = " . $_GET['uid'] . " ORDER BY tstate");
 
 						// build an array for status mapping so we don't need a db query for each row of the table
@@ -54,14 +54,14 @@ include "../Resources/database.php";
 							$problems[$row['pid']] = $row['probName'];
 						}
 
-						if ($userCheck->fetch()) {
+						if ($userExists->fetch()) {
 							while($row = $tix->fetch()) {
 								echo("
 									<tr>
 										<td>" . $states[$row['tstate']] . "</td>
 										<td>" . $row['userDesc'] . "</td>
 										<td><em>" . $problems[$row['ptype']] . "</em></td>
-										<td><a href='TicketModifier.php?uid=" . $_GET['uid'] . "&tid=" . $row['tid'] . "'><img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' /></a></td>
+										<td><a href='TicketModifier.php?uid=" . $_GET['uid'] . "&tid[]=" . $row['tid'] . "'><img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' /></a></td>
 									</tr>
 								");
 							}
