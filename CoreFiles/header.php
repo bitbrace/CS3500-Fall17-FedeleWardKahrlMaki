@@ -5,19 +5,18 @@
                 <h1 class="navbar-text"><strong>Graet Help</strong></h1>
             </div>
            
-
             <div>
-               <ul class="nav">
+               <ul class="nav nav-tabs pull-right" role="tablist">
                
-                    <li class="nav-item"><a href="Dashboard.php" class="nav-link" >Dashboard</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" >About</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" >Contact Us</a></li>
+                    <li class="nav-item" role="presentation"><a href="Dashboard.php" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item" role="presentation"><a href="#" class="nav-link">About</a></li>
+                    <li class="nav-item" role="presentation"><a href="#" class="nav-link">Contact Us</a></li>
                    <?php
                         if (isset($_POST['uid'])){
-                            echo '<li class="nav-item"><a href="logout.php" class="nav-link">Log Out</a></li>';
+                            echo '<li class="nav-item" role="presentation"><a href="logout.php" class="nav-link">Log Out</a></li>';
                         }
                         else{
-                            echo '<li class="nav-item"><a href="login.php" class="nav-link">Log In</a></li>';
+                            echo '<li class="nav-item" role="presentation"><a href="login.php" class="nav-link">Log In</a></li>';
                         }
                    ?>
                 </ul>
@@ -25,5 +24,6 @@
          </nav>
           <div style="border-bottom:1px solid #ccc;"></div>
       </div>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
 </header>
