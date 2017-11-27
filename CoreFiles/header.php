@@ -8,7 +8,7 @@
             <div>
                <ul class="nav nav-tabs pull-right" role="tablist">
                
-                    <li class="nav-item" role="presentation"><a href="Dashboard.php" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item" role="presentation"><a href="dashboard.php" class="nav-link">Dashboard</a></li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">About</a></li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">Contact Us</a></li>
                    <?php
