@@ -1,7 +1,9 @@
 <?php
 
 // Connect to the database, referrence object is named '$database'
-include "../Resources/connectToDB.php";
+//include "../Resources/connectToDB.php";
+include "../Resources/database.php";
+$database = initdb();
 
 // Get user system info mapping functions
 include "../Resources/getUserSystemInfo.php";
