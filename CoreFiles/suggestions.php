@@ -39,30 +39,52 @@ include "../Resources/processSuggestions.php";
 						$results = getSuggText($_GET['tid'], $i);
 
 						# we've found something, break from our loop
-						if ($results[0] <> ''){
+						if (isset($results[0])){
 							break;
 						}
 					}
-
+                    
 					# if we failed to find something, set a message
-					if ($results[0] == ''){
+					if (!isset($results[0])){
 						echo('<strong>Sorry bub, there were no recorded suggestions for your set of issues.</strong>');
 					# otherwise, output some info and allow the user to close the ticket
 					}else{
                         # Allow the user to decide if the suggestion works for them
-                        $count=count($results);
-                        echo("<strong>{$results[0]}</strong><br><br>
-                            <input type='hidden' name='uid' value={$_GET['uid']}>
-                            <input type='hidden' name='tid' value={$_GET['tid']}>
-							 <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
-                            
-                            <input type='Submit' name='notGood' value='Not working, give me a new suggestion'>
-                            
-				        ");
+                        //if (!isset($_GET['notGood']) && !isset($_GET['subWorked'])){
+                        //    $i=0;
+                        //}
                         
+                        if (!isset($_GET['counter'])){
+                            $i=0;
+                        }
+                        else{
+                            $i=$_GET['counter'] + 1;
+                        }
+                        
+                        display($i, $results);
+                        
+                        
+                    }
+                    
+                    function display($i, $results){
+                        if (!isset($results[$i])){
+                            echo("<strong>Sorry, you ran out of suggetions!</strong>");
+                        }
+                        else{
+                            echo("<strong>{$results[$i]}</strong><br><br>");
+                                
+                                echo("<input type='hidden' name='uid' value={$_GET['uid']}>
+                                <input type='hidden' name='tid' value={$_GET['tid']}>
+                                <input type='hidden' name='counter' value=$i>
+                                <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
+                            
+                                <input type='Submit' name='notGood' value='Not working, give me a new suggestion'>
+                            
+                            ");
+                        }
                            
                     }
-					
+                    
 				?>
 				</fieldset>
 			</form>

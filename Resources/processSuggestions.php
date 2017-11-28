@@ -82,9 +82,12 @@
 				$retRecord->execute();
 				break;
 		}
-
-		// return the first record returned from the query for printing
-		return $retRecord->fetch();
+        //This passes all of the results
+        $resultarray = array();
+        while ($row = $retRecord->fetch()){
+            array_push($resultarray, $row['suggText']);
+        }
+		return $resultarray;
 	}
 
 ?>
