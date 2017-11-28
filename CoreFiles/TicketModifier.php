@@ -36,7 +36,7 @@ include "../Resources/getUserSystemInfo.php";
 			// The user wants to modify a ticket(s),
 			// print out info for the ticket(s).
 
-			$stmt = $database->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_GET['tid']) . ") AND T.uid = :user");
+			$stmt = $database->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_POST['tid']) . ") AND T.uid = :user");
 
 			$stmt->bindParam(':user', $_POST['uid'], PDO::PARAM_STR);
 			$stmt->execute();

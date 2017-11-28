@@ -36,11 +36,11 @@ include "../Resources/database.php";
 					// Connect to the database, referrence object is named '$database'
 					initdb();
 
-					if (isset($_GET['uid'])) {
+					if (isset($_POST['uid'])) {
 						// The user wants to see their list of tickets
 
-						$userExists = $database->query("SELECT * FROM user WHERE uid = " . $_GET['uid']);
-						$tix = $database->query("SELECT * FROM ticket WHERE uid = " . $_GET['uid'] . " ORDER BY tstate");
+						$userExists = $database->query("SELECT * FROM user WHERE uid = " . $_POST['uid']);
+						$tix = $database->query("SELECT * FROM ticket WHERE uid = " . $_POST['uid'] . " ORDER BY tstate");
 
 						// build an array for status mapping so we don't need a db query for each row of the table
 						$statMap = $database->query("SELECT * FROM stateMapping");
@@ -61,7 +61,7 @@ include "../Resources/database.php";
 										<td>" . $states[$row['tstate']] . "</td>
 										<td>" . $row['userDesc'] . "</td>
 										<td><em>" . $problems[$row['ptype']] . "</em></td>
-										<td><a href='TicketModifier.php?uid=" . $_GET['uid'] . "&tid[]=" . $row['tid'] . "'><img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' /></a></td>
+										<td><a href='TicketModifier.php?uid=" . $_POST['uid'] . "&tid[]=" . $row['tid'] . "'><img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' /></a></td>
 									</tr>
 								");
 							}
@@ -74,7 +74,7 @@ include "../Resources/database.php";
 
 					// Back button includes uid for dashboard
 					echo("<div class='well'><form action='TicketModifier.php' method='GET'>
-					<input type='hidden' name='uid' value='". $_GET['uid'] ."'>
+					<input type='hidden' name='uid' value='". $_POST['uid'] ."'>
 					<input type='Submit' name='sub' value='Start a New Ticket'></form></div>");
 
 					//trash the db connection
