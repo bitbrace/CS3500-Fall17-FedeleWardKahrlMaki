@@ -10,15 +10,15 @@
                
                     <li class="nav-item" role="presentation">
                         <?php
-                        if (isset($_GET['uid'])){
-                        echo '<a href="dashboard.php?uid='. $_GET['uid'] .'&sub=Return+to+Dashboard" class="nav-link">Dashboard</a>';
+                        if (isset($_POST['uid'])){
+                        echo '<a href="dashboard.php?uid='. $_POST['uid'] .'&sub=Return+to+Dashboard" class="nav-link">Dashboard</a>';
                         }
                             ?>
                    </li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">About</a></li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">Contact Us</a></li>
                    <?php
-                        if (isset($_GET['uid'])){
+                        if (isset($_POST['uid'])){
                             echo '<li class="nav-item" role="presentation"><a href="logout.php" class="nav-link">Log Out</a></li>';
                         }
                         else{

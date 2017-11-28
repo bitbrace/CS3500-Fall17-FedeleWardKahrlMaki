@@ -6,10 +6,10 @@
 
 	// If the suggestion worked, update its state to closed
    
-	if (isset($_GET['subWorked'])){
+	if (isset($_POST['subWorked'])){
 		$database = initdb();
 		$stmt = $database->prepare("UPDATE ticket SET tstate = 2 WHERE tid = :tid");
-		$stmt->bindParam(':tid', $_GET['tid'], PDO::PARAM_INT);
+		$stmt->bindParam(':tid', $_POST['tid'], PDO::PARAM_INT);
         $stmt->execute();
 		$database = null;
 	}

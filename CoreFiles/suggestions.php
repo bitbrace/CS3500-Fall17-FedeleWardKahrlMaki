@@ -30,13 +30,13 @@ include "../Resources/processSuggestions.php";
 		</div>
 
 		<div class="well">
-			<form action='suggestions.php' method='GET'>
+			<form action='suggestions.php' method='POST'>
 				<fieldset>
-					<legend>Suggestions for ticket #<?php echo($_GET['tid']); ?></legend>
+					<legend>Suggestions for ticket #<?php echo($_POST['tid']); ?></legend>
 				<?php 
 					# iterate over the four levels of strictness until we find something
 					for ($i=0; $i < 4; $i++) { 
-						$results = getSuggText($_GET['tid'], $i);
+						$results = getSuggText($_POST['tid'], $i);
 
 						# we've found something, break from our loop
 						if (isset($results[0])){
@@ -50,15 +50,13 @@ include "../Resources/processSuggestions.php";
 					# otherwise, output some info and allow the user to close the ticket
 					}else{
                         # Allow the user to decide if the suggestion works for them
-                        //if (!isset($_GET['notGood']) && !isset($_GET['subWorked'])){
-                        //    $i=0;
-                        //}
+                        # Lets them choose if the option works for them and get a new suggestion if it doesn't
                         
-                        if (!isset($_GET['counter'])){
+                        if (!isset($_POST['counter'])){
                             $i=0;
                         }
                         else{
-                            $i=$_GET['counter'] + 1;
+                            $i=$_POST['counter'] + 1;
                         }
                         
                         display($i, $results);
@@ -73,8 +71,8 @@ include "../Resources/processSuggestions.php";
                         else{
                             echo("<strong>{$results[$i]}</strong><br><br>");
                                 
-                                echo("<input type='hidden' name='uid' value={$_GET['uid']}>
-                                <input type='hidden' name='tid' value={$_GET['tid']}>
+                                echo("<input type='hidden' name='uid' value={$_POST['uid']}>
+                                <input type='hidden' name='tid' value={$_POST['tid']}>
                                 <input type='hidden' name='counter' value=$i>
                                 <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
                             
@@ -92,8 +90,8 @@ include "../Resources/processSuggestions.php";
 
 	<!-- Back button includes uid for dashboard -->
 	<div class='well'>
-		<form action='dashboard.php' method='GET'>
-			<input type='hidden' name='uid' value='<?php echo($_GET['uid']); ?>'>
+		<form action='dashboard.php' method='POST'>
+			<input type='hidden' name='uid' value='<?php echo($_POST['uid']); ?>'>
 			<input type='Submit' name='sub' value='Return to Dashboard'>
 		</form>
 	</div>
