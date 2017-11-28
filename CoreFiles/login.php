@@ -24,8 +24,8 @@
 		}else if($sid!==true){
 			setcookie("sessionID",$sid,$exp,"/",$domainName,true,true);
 			//Information on redirection taken from: https://stackoverflow.com/a/768472
-//			header("Location: dashboard.php",true,303);//303 is the HTTP redirection code
-			header("Location: dumpvars.php",true,303);//303 is the HTTP redirection code
+			header("Location: dashboard.php",true,303);//303 is the HTTP redirection code
+//			header("Location: dumpvars.php",true,303);//303 is the HTTP redirection code
 //			$notice.="<p><a href='dumpvars.php'>dumpvars.php</a></p>";
 			exit(0);
 		}
