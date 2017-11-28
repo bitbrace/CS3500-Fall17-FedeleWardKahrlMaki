@@ -10,6 +10,7 @@
 		$database = initdb();
 		$stmt = $database->prepare("UPDATE ticket SET tstate = 2 WHERE tid = :tid");
 		$stmt->bindParam(':tid', $_GET['tid'], PDO::PARAM_INT);
+        $stmt->execute();
 		$database = null;
 	}
     
