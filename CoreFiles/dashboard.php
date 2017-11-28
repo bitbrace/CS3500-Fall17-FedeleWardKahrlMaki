@@ -73,7 +73,7 @@ include "../Resources/database.php";
 					}
 
 					// Back button includes uid for dashboard
-					echo("<div class='well'><form action='TicketModifier.php' method='GET'>
+					echo("<div class='well'><form action='TicketModifier.php' method='POST'>
 					<input type='hidden' name='uid' value='". $_POST['uid'] ."'>
 					<input type='Submit' name='sub' value='Start a New Ticket'></form></div>");
 
