@@ -70,7 +70,7 @@ include "../Resources/getUserSystemInfo.php";
 					<select name='ptype' id='prob'>
 				");
 
-				$probs = $database->query("SELECT * FROM problemmapping");
+				$probs = $database->query("SELECT * FROM problemMapping");
 				while($pRows = $probs->fetch()){
 					// Displays the current problem for the ticket
 					if ($pRows[1] == $row[3]){
