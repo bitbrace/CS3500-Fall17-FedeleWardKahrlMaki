@@ -74,7 +74,7 @@ if (isset($_COOKIE['sessionID'])
                         else{
                             echo("<strong>{$results[$i]}</strong><br><br>");
                                 
-                                echo("<input type='hidden' name='uid' value={$_POST['uid']}>
+                                echo("<input type='hidden' name='uid' value=$uid>
                                 <input type='hidden' name='tid' value={$_POST['tid']}>
                                 <input type='hidden' name='counter' value=$i>
                                 <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
@@ -94,7 +94,7 @@ if (isset($_COOKIE['sessionID'])
 	<!-- Back button includes uid for dashboard -->
 	<div class='well'>
 		<form action='dashboard.php' method='POST'>
-			<input type='hidden' name='uid' value='<?php echo($_POST['uid']); ?>'>
+			<input type='hidden' name='uid' value='<?php echo($uid); ?>'>
 			<input type='Submit' name='sub' value='Return to Dashboard'>
 		</form>
 	</div>
@@ -112,7 +112,7 @@ if (isset($_COOKIE['sessionID'])
 </html>
 
 <?php
-else{
+}else{
 ?>
 
 <!DOCTYPE html>
