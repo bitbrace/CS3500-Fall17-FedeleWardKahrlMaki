@@ -31,14 +31,17 @@ include "../Resources/getUserSystemInfo.php";
 
 		// Submit tickets to the database and print results if any
 		include "../Resources/submitTicketUpdate.php";
+		
+		isset($_COOKIE['sessionID']) AND
+		($uid = recall((int) $_COOKIE['sessionID']));
 
-		if (isset($_POST['uid']) AND isset($_POST['tid'])){
+		if (($uid !== false) AND isset($_POST['tid'])){
 			// The user wants to modify a ticket(s),
 			// print out info for the ticket(s).
 
 			$stmt = $database->prepare("SELECT T.tid, U.username, S.stateName, P.probName, T.userDesc FROM ticket T JOIN user U on T.uid = U.uid JOIN statemapping S ON T.tstate = S.tstate JOIN problemmapping P ON T.ptype = P.pid WHERE T.tid in (" . implode(', ',$_POST['tid']) . ") AND T.uid = :user");
 
-			$stmt->bindParam(':user', $_POST['uid'], PDO::PARAM_STR);
+			$stmt->bindParam(':user', $uid, PDO::PARAM_STR);
 			$stmt->execute();
 
 			while($row = $stmt->fetch()){
@@ -88,7 +91,7 @@ include "../Resources/getUserSystemInfo.php";
 					<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc' class='inline' required>". $row[4] ." </textarea>
 					<br>
 
-					<input type='hidden' name='uid' value='". $_POST['uid'] ."'>
+					<input type='hidden' name='uid' value='". $uid ."'>
 					<input type='hidden' name='tid[]' value='". implode(', ',$_POST['tid']) ."'>
 
 					<input type='hidden' name='subUpdate' value='". $row[0] ."'>
@@ -98,7 +101,7 @@ include "../Resources/getUserSystemInfo.php";
 					</form>
 
 					<form action='suggestions.php' method='POST'>
-					<input type='hidden' name='uid' value='". $_POST['uid'] ."'>
+					<input type='hidden' name='uid' value='". $uid ."'>
 					<input type='hidden' name='tid' value='".$row[0]."'>
 					<input type='Submit' name='subView' value='View Suggestions'>
 					</form>
@@ -107,7 +110,7 @@ include "../Resources/getUserSystemInfo.php";
 				");
 			}
 
-		}else if (isset($_POST['uid'])) {
+		}else if (($uid !== false)) {
 			// The user wants to create a new ticket
 			
 			echo("<div class='well'>
@@ -133,7 +136,7 @@ include "../Resources/getUserSystemInfo.php";
 				<br>
 				<textarea rows='4' cols='50' maxlength='100' name='userDesc' id='desc' required> </textarea>
 				<br>
-				<input type='hidden' name='uid' value='". $_POST['uid'] ."'>
+				<input type='hidden' name='uid' value='". $uid ."'>
 				<input type='hidden' name='subCreate'>
 				<input type='Submit' value='Create Ticket'>
 				</fieldset>
@@ -146,7 +149,7 @@ include "../Resources/getUserSystemInfo.php";
 
 		// Back button includes uid for dashboard
 		echo("<div class='well'><form action='dashboard.php' method='POST'>
-		<input type='hidden' name='uid' value='". $_POST['uid'] ."'>
+		<input type='hidden' name='uid' value='". $uid ."'>
 		<input type='Submit' name='sub' value='Return to Dashboard'></form></div>");
 
 		//trash the db connection
