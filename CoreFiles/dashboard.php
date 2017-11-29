@@ -63,9 +63,14 @@ require_once "../Resources/authenticate.php";
 										<td>" . $states[$row['tstate']] . "</td>
 										<td>" . $row['userDesc'] . "</td>
 										<td><em>" . $problems[$row['ptype']] . "</em></td>
-										<td><a href='TicketModifier.php?uid=" . $uid . "&tid[]=" . $row['tid'] . "'><img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' /></a></td>
+										<form action='TicketModifier.php' method='POST'>
+										<input type='hidden' name='tid' value='".$row['tid']."'>
+										<input type='Submit' name='sub' value='Start a New Ticket'></form></div>
+										<img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' />
+										</form>
 									</tr>
 								");
+//										<td><a href='TicketModifier.php?uid=" . $uid . "&tid[]=" . $row['tid'] . "'></a></td>
 							}
 						} else {
 							echo("<tr><td colspan=\"4\" class='alert alert-danger'>Couldn't find that user.</td></tr>");
