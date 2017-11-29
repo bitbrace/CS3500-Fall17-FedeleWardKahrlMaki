@@ -11,6 +11,9 @@ include "../Resources/getUserSystemInfo.php";
 // Provides method for getting suggestion text and updating tickets
 include "../Resources/processSuggestions.php";
 
+if (isset($_COOKIE['sessionID'])
+&&($uid = recall((int) $_COOKIE['sessionID']))
+&&($uid !== false)) {
 ?>
 
 <!DOCTYPE html>
@@ -107,3 +110,25 @@ include "../Resources/processSuggestions.php";
 
 </body>
 </html>
+
+<?php
+else{
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Ticket Modifier</title>
+	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
+</head>
+<body>
+	<div class="container">
+		<div class="well aler alert-danger">
+			<strong>Showing Results for system: <?php echo(getOS() .", ". getBrowser() .", ". getIPAddr()); ?></strong>
+		</div>
+	</div>
+</body>
+
+<?php
+}

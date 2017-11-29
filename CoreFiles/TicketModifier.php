@@ -54,7 +54,7 @@ include "../Resources/getUserSystemInfo.php";
 					<select name='status' id='status'>
 					");
 
-				$states = $database->query("SELECT * FROM statemapping");
+				$states = $database->query("SELECT * FROM stateMapping");
 				while($pRows = $states->fetch()){
 					// Displays the current problem for the ticket
 					if ($pRows[1] == $row[2]){
