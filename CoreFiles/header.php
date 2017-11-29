@@ -15,11 +15,6 @@
                             echo '<li class="nav-item" role="presentation"><a href="dashboard.php" class="nav-link">Dashboard</a></li>';
                         }
                     ?>
-                   <?php
-                        if (isset($_COOKIE['sessionID'])){
-                            echo '<li class="nav-item" role="presentation"><a href="TicketModifier.php" class="nav-link">Create Ticket</a></li>';
-                        }
-                    ?>
                     <li class="nav-item" role="presentation"><a href="about.php" class="nav-link">About</a></li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">Contact Us</a></li>
                    <?php
