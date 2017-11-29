@@ -21,6 +21,7 @@
 			$uid=$statement->fetch(PDO::FETCH_ASSOC);
 			if($uid!==false){
 				$uid=$uid["uid"];
+				updateSession($sid);
 			}
 		}catch(Throwable $e){
 			rolldie();

@@ -20,7 +20,7 @@ This page creates no output, but several of the provided functions have side-eff
 
 Provides:--------------------------------------------------------------------------------------------------------------------------
 
-Function: 'recall' takes a session ID and gets the corresponding user ID from the database
+Function: 'recall' takes a session ID and gets the corresponding user ID from the database; it also calles 'updateSession'
 Function: 'createSession' creates a new session given a user ID
 Function: 'deleteSession' deletes a session given a session ID
 Function: 'cleanSessions' deletes all sessions from the database that've expired
