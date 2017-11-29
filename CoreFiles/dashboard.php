@@ -1,8 +1,8 @@
 <?php
 
 // Connect to the database, referrence object is named '$database'
-include "../Resources/database.php";
-
+require_once "../Resources/database.php";
+require_once "../Resources/authenticate.php";
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +36,11 @@ include "../Resources/database.php";
 					// Connect to the database, referrence object is named '$database'
 					initdb();
 
-					if (isset($_POST['uid'])) {
+					if (isset($_COOKIE['sessionID'])) {
+						$uid = recall((int) $_COOKIE['sessionID']);
+					}
+
+					if ($uid !== false) {
 						// The user wants to see their list of tickets
 
 						$userExists = $database->query("SELECT * FROM user WHERE uid = " . $_POST['uid']);
