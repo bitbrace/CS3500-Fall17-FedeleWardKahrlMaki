@@ -1,12 +1,13 @@
 <header>
      <div class="container">
-         <nav class="navbar navbar-inverse " role="navigation">
-             <div class="navbar-header">
-                <h1 class="navbar-text"><strong>Graet Help</strong></h1>
+         
+         
+             <div class="banner">
+                <h1><strong>Graet Help</strong></h1>
             </div>
-           
+        <nav class="navbar" role="navigation">
             <div>
-               <ul class="nav nav-tabs pull-right" role="tablist">
+               <ul class="nav nav-tabs" role="tablist">
                
                     <li class="nav-item" role="presentation">
                         <?php
@@ -15,7 +16,7 @@
                         }
                             ?>
                    </li>
-                    <li class="nav-item" role="presentation"><a href="#" class="nav-link">About</a></li>
+                    <li class="nav-item" role="presentation"><a href="about.php" class="nav-link">About</a></li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">Contact Us</a></li>
                    <?php
                         if (isset($_POST['uid'])){
