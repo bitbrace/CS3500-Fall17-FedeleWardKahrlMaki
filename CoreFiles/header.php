@@ -9,14 +9,19 @@
             <div>
                <ul class="nav nav-tabs" role="tablist">
                
-                    <li class="nav-item" role="presentation">
-                        <?php
+                    
+                    <?php
                         if (isset($_COOKIE['sessionID'])){
                         //echo '<a href="dashboard.php?uid='. $_POST['uid'] .'&sub=Return+to+Dashboard" class="nav-link">Dashboard</a>';
-                            echo '<a href="dashboard.php" class="nav-link">Dashboard</a>';
+                            echo '<li class="nav-item" role="presentation"><a href="dashboard.php" class="nav-link">Dashboard</a></li>';
                         }
-                            ?>
-                   </li>
+                    ?>
+                   <?php
+                        if (isset($_COOKIE['sessionID'])){
+                        //echo '<a href="dashboard.php?uid='. $_POST['uid'] .'&sub=Return+to+Dashboard" class="nav-link">Dashboard</a>';
+                            echo '<li class="nav-item" role="presentation"><a href="TicketModifier" class="nav-link">Create Ticket</a></li>';
+                        }
+                    ?>
                     <li class="nav-item" role="presentation"><a href="about.php" class="nav-link">About</a></li>
                     <li class="nav-item" role="presentation"><a href="#" class="nav-link">Contact Us</a></li>
                    <?php
