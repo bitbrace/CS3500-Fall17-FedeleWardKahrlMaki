@@ -111,8 +111,6 @@ include "../Resources/getUserSystemInfo.php";
 			}
 
 		}else if (($uid !== false)) {
-			echo "<p>".($uid?"true":"false")."</p>";
-			echo "<p>".(isset($_POST['tid'])?"true":"false")."</p>";
 			// The user wants to create a new ticket
 			
 			echo("<div class='well'>

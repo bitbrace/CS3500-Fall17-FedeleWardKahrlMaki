@@ -61,7 +61,7 @@ if (isset($_COOKIE['sessionID'])
                         else{
                             $i=$_POST['counter'] + 1;
                         }
-                                            function display($i, $results){
+                                            function display($i, $results,$uid){
                         if (!isset($results[$i])){
                             echo("<strong>Sorry, you ran out of suggetions!</strong>");
                         }
@@ -80,7 +80,7 @@ if (isset($_COOKIE['sessionID'])
                            
                     }
                         
-                        display($i, $results);
+                        display($i, $results,$uid);
                         
                         
                     }
