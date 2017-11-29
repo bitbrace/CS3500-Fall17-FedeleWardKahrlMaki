@@ -12,14 +12,12 @@
                     
                     <?php
                         if (isset($_COOKIE['sessionID'])){
-                        //echo '<a href="dashboard.php?uid='. $_POST['uid'] .'&sub=Return+to+Dashboard" class="nav-link">Dashboard</a>';
                             echo '<li class="nav-item" role="presentation"><a href="dashboard.php" class="nav-link">Dashboard</a></li>';
                         }
                     ?>
                    <?php
                         if (isset($_COOKIE['sessionID'])){
-                        //echo '<a href="dashboard.php?uid='. $_POST['uid'] .'&sub=Return+to+Dashboard" class="nav-link">Dashboard</a>';
-                            echo '<li class="nav-item" role="presentation"><a href="TicketModifier" class="nav-link">Create Ticket</a></li>';
+                            echo '<li class="nav-item" role="presentation"><a href="TicketModifier.php" class="nav-link">Create Ticket</a></li>';
                         }
                     ?>
                     <li class="nav-item" role="presentation"><a href="about.php" class="nav-link">About</a></li>

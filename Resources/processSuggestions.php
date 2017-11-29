@@ -11,6 +11,7 @@
 		$stmt = $database->prepare("UPDATE ticket SET tstate = 2 WHERE tid = :tid");
 		$stmt->bindParam(':tid', $_POST['tid'], PDO::PARAM_INT);
         $stmt->execute();
+        header("Location: dashboard.php");
 		$database = null;
 	}
     
