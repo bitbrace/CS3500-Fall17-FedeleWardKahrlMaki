@@ -65,7 +65,7 @@ require_once "../Resources/authenticate.php";
 										<td><em>" . $problems[$row['ptype']] . "</em></td>
 										<td>
 										<form action='TicketModifier.php' method='POST'>
-										<input type='hidden' name='tid' value='".$row['tid']."'>
+										<input type='hidden' name='tid[]' value='".$row['tid']."'>
 										<input type='Submit' name='sub' value='Start a New Ticket'></form></div>
 										<img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' />
 										</td>
