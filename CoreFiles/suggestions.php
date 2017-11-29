@@ -19,13 +19,13 @@ if (isset($_COOKIE['sessionID'])
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Ticket Modifier</title>
+	<title>Suggestions | Graet Help</title>
 	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
 </head>
 <body>
 
-	<?php include "header.php"; ?>
+	<?php include "includes/header.inc.php"; ?>
 
 	<div class="container">
 		<div class="well aler alert-danger">
@@ -36,9 +36,9 @@ if (isset($_COOKIE['sessionID'])
 			<form action='suggestions.php' method='POST'>
 				<fieldset>
 					<legend>Suggestions for ticket #<?php echo($_POST['tid']); ?></legend>
-				<?php 
+				<?php
 					# iterate over the four levels of strictness until we find something
-					for ($i=0; $i < 4; $i++) { 
+					for ($i=0; $i < 4; $i++) {
 						$results = getSuggText($_POST['tid'], $i);
 
 						# we've found something, break from our loop
@@ -46,7 +46,7 @@ if (isset($_COOKIE['sessionID'])
 							break;
 						}
 					}
-                    
+
 					# if we failed to find something, set a message
 					if (!isset($results[0])){
 						echo('<strong>Sorry bub, there were no recorded suggestions for your set of issues.</strong>');
@@ -54,7 +54,7 @@ if (isset($_COOKIE['sessionID'])
 					}else{
                         # Allow the user to decide if the suggestion works for them
                         # Lets them choose if the option works for them and get a new suggestion if it doesn't
-                        
+
                         if (!isset($_POST['counter'])){
                             $i=0;
                         }
@@ -67,25 +67,25 @@ if (isset($_COOKIE['sessionID'])
                         }
                         else{
                             echo("<strong>{$results[$i]}</strong><br><br>");
-                                
+
                                 echo("<input type='hidden' name='uid' value=$uid>
                                 <input type='hidden' name='tid' value={$_POST['tid']}>
                                 <input type='hidden' name='counter' value=$i>
                                 <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
-                            
+
                                 <input type='Submit' name='notGood' value='Not working, give me a new suggestion'>
-                            
+
                             ");
                         }
-                           
+
                     }
-                        
+
                         display($i, $results,$uid);
-                        
-                        
+
+
                     }
-                    
-                    
+
+
 				?>
 				</fieldset>
 			</form>
@@ -98,14 +98,14 @@ if (isset($_COOKIE['sessionID'])
 			<input type='Submit' name='sub' value='Return to Dashboard'>
 		</form>
 	</div>
-	
+
 	<!--End of the container-->
 	</div>
 
-	<?php 
+	<?php
 		//trash the db connection
 		$database=null;
-		include "footer.php";
+		include "includes/footer.inc.php";
 	?>
 
 </body>

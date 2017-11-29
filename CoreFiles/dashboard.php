@@ -8,7 +8,7 @@ require_once "../Resources/authenticate.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>User Dashboard</title>
+	<title>User Dashboard | Graet Help</title>
 	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
 
@@ -18,7 +18,7 @@ require_once "../Resources/authenticate.php";
 </head>
 <body>
 
-	<?php include "header.php"; ?>
+	<?php include "includes/header.inc.php"; ?>
 
 	<div class="container">
 		<div class="panel panel-danger spaceabove">
@@ -64,7 +64,7 @@ require_once "../Resources/authenticate.php";
 										<td>" . $row['userDesc'] . "</td>
 										<td><em>" . $problems[$row['ptype']] . "</em></td>
 										<td>
-										<form action='TicketModifier.php' method='POST'>
+										<form action='ticket.php' method='POST'>
 										<input type='hidden' name='tid[]' value='".$row['tid']."'>
 										<input type='Submit' name='sub' value='Edit Ticket'></form></div>
 										<img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' />
@@ -72,7 +72,7 @@ require_once "../Resources/authenticate.php";
 										</form>
 									</tr>
 								");
-//										<td><a href='TicketModifier.php?uid=" . $uid . "&tid[]=" . $row['tid'] . "'></a></td>
+//										<td><a href='ticket.php?uid=" . $uid . "&tid[]=" . $row['tid'] . "'></a></td>
 							}
 						} else {
 							echo("<tr><td colspan=\"4\" class='alert alert-danger'>Couldn't find that user.</td></tr>");
@@ -82,7 +82,7 @@ require_once "../Resources/authenticate.php";
 					}
 
 					// Back button includes uid for dashboard
-					echo("<div class='well'><form action='TicketModifier.php' method='POST'>
+					echo("<div class='well'><form action='ticket.php' method='POST'>
 					<input type='hidden' name='uid' value='". $uid ."'>
 					<input type='Submit' name='sub' value='Start a New Ticket'></form></div>");
 
@@ -98,7 +98,7 @@ require_once "../Resources/authenticate.php";
 	<!--End of the container-->
 	</div>
 
-	<?php include "footer.php";?>
+	<?php include "includes/footer.inc.php";?>
 
 </body>
 </html>

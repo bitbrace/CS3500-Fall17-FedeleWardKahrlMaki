@@ -13,7 +13,7 @@ include "../Resources/getUserSystemInfo.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Ticket Modifier</title>
+	<title>Ticket Modifier | Graet Help</title>
 	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
 
@@ -23,7 +23,7 @@ include "../Resources/getUserSystemInfo.php";
 </head>
 <body>
 
-	<?php include "header.php"; ?>
+	<?php include "includes/header.inc.php"; ?>
 
 	<div class="container">
 
@@ -31,7 +31,7 @@ include "../Resources/getUserSystemInfo.php";
 
 		// Submit tickets to the database and print results if any
 		include "../Resources/submitTicketUpdate.php";
-		
+
 		isset($_COOKIE['sessionID']) AND
 		($uid = recall((int) $_COOKIE['sessionID']));
 
@@ -61,7 +61,7 @@ include "../Resources/getUserSystemInfo.php";
 						echo("<option value='".$pRows[0]."' selected>{$pRows[1]}</option>");
 					}else{
 						echo("<option value='".$pRows[0]."'>{$pRows[1]}</option>");
-					}			
+					}
 				}
 
 				echo("
@@ -77,12 +77,12 @@ include "../Resources/getUserSystemInfo.php";
 						echo("<option value='".$pRows[0]."' selected>{$pRows[1]}</option>");
 					}else{
 						echo("<option value='".$pRows[0]."'>{$pRows[1]}</option>");
-					}			
+					}
 				}
 
 				echo("
 					</select><br>
-					
+
 					<label>For system:&nbsp</label>". getOS() .", ". getBrowser() .", ". getIPAddr() ."<br>
 
 					<label for='desc'>Further Decription (max 100 characters)</label>
@@ -112,7 +112,7 @@ include "../Resources/getUserSystemInfo.php";
 
 		}else if (($uid !== false)) {
 			// The user wants to create a new ticket
-			
+
 			echo("<div class='well'>
 				<form action='' method='POST'>
 				<fieldset>
@@ -155,11 +155,11 @@ include "../Resources/getUserSystemInfo.php";
 		//trash the db connection
 		$database=null;
 	?>
-	
+
 	<!--End of the container-->
 	</div>
 
-	<?php include "footer.php";?>
+	<?php include "includes/footer.inc.php";?>
 
 </body>
 </html>

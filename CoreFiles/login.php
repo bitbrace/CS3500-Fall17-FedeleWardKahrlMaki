@@ -1,24 +1,24 @@
 <?php
-	
+
 	require_once "../Resources/etc.php";
 	require_once "../Resources/authenticate.php";
-	
+
 	startup();
-	
+
 	$notice="";
-	
+
 	if(isset($_SERVER["HTTPS"])){
 		$sid=true;
 		if(isset($_COOKIE["sessionID"])){
 			list($sid,$exp)=updateSession($_COOKIE["sessionID"]);
 		}
-		
+
 		if(($sid===true||$sid===false)
 		&&isset($_POST["username"])
 		&&isset($_POST["password"])){
 			list($sid,$exp)=createSession(authenticate($_POST["username"],$_POST["password"]),600);
 		}
-		
+
 		if($sid===false){
 			$notice.="<p>Error: couldn't validate credentials.</p>";
 		}else if($sid!==true){
@@ -32,16 +32,18 @@
 	}else{
 		$notice="<p>You cannot login with an insecure connection.</p>";
 	}
-	
+
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
-	<!--IMPORTANT PAGE STUFF GOES HERE-->
+		<title>Login | Graet Help</title>
+		<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
 	</head>
 	<body>
-		<?php include "header.php";//INCLUDE HEADER ?>
+		<?php include "includes/header.inc.php";//INCLUDE HEADER ?>
 		<form class='center middle' action='login.php' method='POST'>
 			<fieldset>
 				<img class='middle' src='FIXME'/>
@@ -53,7 +55,7 @@
 				<?php echo $notice;?>
 			<fieldset>
 		</form>
-		<?php include "footer.php";//INCLUDE FOOTER ?>
+		<?php include "includes/footer.inc.php";//INCLUDE FOOTER ?>
 	</body>
 </html>
 
