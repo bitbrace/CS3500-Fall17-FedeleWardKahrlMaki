@@ -19,5 +19,5 @@
 		echo "<p>$key => $value</p>";
 			}
 		?>
-	<body>
+    </body>
 </html>
