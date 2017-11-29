@@ -11,25 +11,6 @@ include "../Resources/getUserSystemInfo.php";
 // Provides method for getting suggestion text and updating tickets
 include "../Resources/processSuggestions.php";
 
-                    function display($i, $results){
-                        if (!isset($results[$i])){
-                            echo("<strong>Sorry, you ran out of suggetions!</strong>");
-                        }
-                        else{
-                            echo("<strong>{$results[$i]}</strong><br><br>");
-                                
-                                echo("<input type='hidden' name='uid' value=$uid>
-                                <input type='hidden' name='tid' value={$_POST['tid']}>
-                                <input type='hidden' name='counter' value=$i>
-                                <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
-                            
-                                <input type='Submit' name='notGood' value='Not working, give me a new suggestion'>
-                            
-                            ");
-                        }
-                           
-                    }
-
 if (isset($_COOKIE['sessionID'])
 &&($uid = recall((int) $_COOKIE['sessionID']))
 &&($uid !== false)) {
@@ -80,6 +61,24 @@ if (isset($_COOKIE['sessionID'])
                         else{
                             $i=$_POST['counter'] + 1;
                         }
+                                            function display($i, $results){
+                        if (!isset($results[$i])){
+                            echo("<strong>Sorry, you ran out of suggetions!</strong>");
+                        }
+                        else{
+                            echo("<strong>{$results[$i]}</strong><br><br>");
+                                
+                                echo("<input type='hidden' name='uid' value=$uid>
+                                <input type='hidden' name='tid' value={$_POST['tid']}>
+                                <input type='hidden' name='counter' value=$i>
+                                <input type='Submit' name='subWorked' value='This Worked! Close this ticket'></br></br>
+                            
+                                <input type='Submit' name='notGood' value='Not working, give me a new suggestion'>
+                            
+                            ");
+                        }
+                           
+                    }
                         
                         display($i, $results);
                         
