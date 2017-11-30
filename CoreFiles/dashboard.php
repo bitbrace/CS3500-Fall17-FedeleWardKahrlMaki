@@ -51,17 +51,24 @@ require_once "../Resources/authenticate.php";
 
 						if ($userExists->fetch()) {
 
+							/*
+							 * first form starts new tickets
+							 * second form opens existing tickets for editing
+							 */
 							echo("
 							<form action='ticket.php' method='POST'>
 							<input type='hidden' name='uid' value='". $uid ."'>
 							<input type='Submit' name='sub' value='Start a New Ticket'></form>
+
+							<form action='ticket.php' method='POST'>
+
 							<table class='table'>
 								<thead class='thead-inverse'>
 								<tr>
 									<th>Status</th>
 									<th>Description</th>
 									<th>Type</th>
-									<th>Edit</th>
+									<th><input type='image' name='sub' value='Edit Ticket' alt='Edit Ticket' src='../Resources/images/ic_open_in_browser_black_24dp_1x.png'></th>
 								</tr>
 								</thead>
 								<tbody>
@@ -74,9 +81,7 @@ require_once "../Resources/authenticate.php";
 										<td style='vertical-align:middle;'>" . $row['userDesc'] . "</td>
 										<td style='vertical-align:middle;'><em>" . $problems[$row['ptype']] . "</em></td>
 										<td style='vertical-align:middle;'>
-											<form action='ticket.php' method='POST'>
-											<input type='hidden' name='tid[]' value='".$row['tid']."'>
-											<input type='image' name='sub' value='Edit Ticket' alt='Edit Ticket' src='../Resources/images/ic_mode_edit_black_24dp_1x.png'></form></div>
+											<input type='checkbox' name='tid[]' value='".$row['tid']."'>
 										</td>
 										</form>
 									</tr>
@@ -86,6 +91,7 @@ require_once "../Resources/authenticate.php";
 							echo("
 								</tbody>
 								</table>
+								</form>
 							");
 
 						} else {
