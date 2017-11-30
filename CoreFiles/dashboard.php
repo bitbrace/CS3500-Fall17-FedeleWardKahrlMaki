@@ -63,7 +63,7 @@ require_once "../Resources/authenticate.php";
 							<form action='ticket.php' method='POST'>
 
 							<table class='table'>
-								<thead class='thead-inverse'>
+								<thead>
 								<tr>
 									<th>Status</th>
 									<th>Description</th>
@@ -71,6 +71,12 @@ require_once "../Resources/authenticate.php";
 									<th><input type='image' name='sub' value='Edit Ticket' alt='Edit Ticket' src='../Resources/images/ic_open_in_browser_black_24dp_1x.png'></th>
 								</tr>
 								</thead>
+								<tfoot>
+								<tr>
+									<td colspan='3'>&nbsp;</td>
+									<td><input type='image' name='sub' value='Edit Ticket' alt='Edit Ticket' src='../Resources/images/ic_open_in_browser_black_24dp_1x.png'></td>
+								</tr>
+								</tfoot>
 								<tbody>
 							");
 
