@@ -94,11 +94,7 @@ require_once "../Resources/authenticate.php";
 								");
 //										<td><a href='ticket.php?uid=" . $uid . "&tid[]=" . $row['tid'] . "'></a></td>
 							}
-							echo("
-								</tbody>
-								</table>
-								</form>
-							");
+
 
 						} else {
 							echo("<tr><td colspan=\"4\" class='alert alert-danger'>Couldn't find that user.</td></tr>");
@@ -107,19 +103,17 @@ require_once "../Resources/authenticate.php";
 						echo("<tr><td colspan=\"4\" class='alert alert-danger'>You have been logged out.</td></tr>");
 					}
 
-					// Back button includes uid for dashboard
-					/* echo("<div class='well'><form action='ticket.php' method='POST'>
-					<input type='hidden' name='uid' value='". $uid ."'>
-					<input type='Submit' name='sub' value='Start a New Ticket'></form></div>"); */
+					echo("
+						</tbody>
+						</table>
+						</form>
+					");
 
 					//trash the db connection
 					$database=null;
 				?>
+			</div>
 		</div>
-	</div>
-
-
-
 	<!--End of the container-->
 	</div>
 
