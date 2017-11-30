@@ -29,12 +29,14 @@ include "../Resources/getUserSystemInfo.php";
 
 	<?php
 
+		isset($_COOKIE['sessionID']) AND
+		($uid = recall((int) $_COOKIE['sessionID']));
+		
 		// Submit tickets to the database and print results if any
 		include "../Resources/submitTicketUpdate.php";
 
-		isset($_COOKIE['sessionID']) AND
-		($uid = recall((int) $_COOKIE['sessionID']));
-
+	if (isset($uid)){
+		
 		if (($uid !== false) AND isset($_POST['tid'])){
 			// The user wants to modify a ticket(s),
 			// print out info for the ticket(s).
@@ -143,15 +145,17 @@ include "../Resources/getUserSystemInfo.php";
 				</form>
 				</div>
 				");
-		}else{
-			echo("<div class='alert alert-danger'>Failed to get user or ticket info from server.</div>");
 		}
+	}else{
+		echo("<div class='alert alert-danger'>Failed to get user or ticket info from server.</div>");
+	}
 
 		// Back button includes uid for dashboard
 		echo("<div class='well'><form action='dashboard.php' method='POST'>
-		<input type='hidden' name='uid' value='". $uid ."'>
 		<input type='Submit' name='sub' value='Return to Dashboard'></form></div>");
 
+		//<input type='hidden' name='uid' value='". $uid ."'>
+		
 		//trash the db connection
 		$database=null;
 	?>
