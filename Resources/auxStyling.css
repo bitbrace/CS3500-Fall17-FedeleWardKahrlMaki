@@ -1,10 +1,10 @@
-/* 
-Use this file to style any extra/special casses. Please do not modify someone 
+/*
+Use this file to style any extra/special casses. Please do not modify someone
 else's style, instead use a id or class.
 */
 
 form {
-	margin: 2em;
+	margin: 1em;
 }
 
 .error {
@@ -20,12 +20,16 @@ p{
 .banner{
     padding: 3em;
     text-align:center;
-    background: linear-gradient(to right, lightblue, blue); 
-    
+    background: linear-gradient(to right, lightblue, blue);
+
     /*background: -webkit-linear-gradient(left, red , yellow);*/
 }
 
 h1{
     font-size: 5em;
     font-family: cursive;
+}
+
+td.dash {
+	vertical-align: middle;
 }

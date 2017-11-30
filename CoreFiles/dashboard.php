@@ -9,8 +9,8 @@ require_once "../Resources/authenticate.php";
 <html lang="en">
 <head>
 	<title>User Dashboard | Graet Help</title>
-	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../Resources/auxStyling.css">
+	<link href="../Resources/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
 
 	<!--Used to fade update bannder-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -21,18 +21,11 @@ require_once "../Resources/authenticate.php";
 	<?php include "includes/header.inc.php"; ?>
 
 	<div class="container">
-		<div class="panel panel-danger spaceabove">
+		<div class="panel">
 			<div class="panel-heading"><h4>My Tickets</h4></div>
-			<table class="table">
-				<tr>
-					<th>Status</th>
-					<th>Description</th>
-					<th>Type</th>
-					<th>Edit</th>
-				</tr>
+
 				<!-- database pull -->
 				<?php
-
 					// Connect to the database, referrence object is named '$database'
 					initdb();
 
@@ -57,39 +50,59 @@ require_once "../Resources/authenticate.php";
 						}
 
 						if ($userExists->fetch()) {
+
+							echo("
+							<form action='ticket.php' method='POST'>
+							<input type='hidden' name='uid' value='". $uid ."'>
+							<input type='Submit' name='sub' value='Start a New Ticket'></form>
+							<table class='table'>
+								<thead class='thead-inverse'>
+								<tr>
+									<th>Status</th>
+									<th>Description</th>
+									<th>Type</th>
+									<th>Edit</th>
+								</tr>
+								</thead>
+								<tbody>
+							");
+
 							while($row = $tix->fetch()) {
 								echo("
 									<tr>
-										<td>" . $states[$row['tstate']] . "</td>
-										<td>" . $row['userDesc'] . "</td>
-										<td><em>" . $problems[$row['ptype']] . "</em></td>
-										<td>
-										<form action='ticket.php' method='POST'>
-										<input type='hidden' name='tid[]' value='".$row['tid']."'>
-										<input type='Submit' name='sub' value='Edit Ticket'></form></div>
-										<img src='../Resources/images/ic_mode_edit_black_24dp_1x.png' alt='edit' />
+										<td style='vertical-align:middle;'>" . $states[$row['tstate']] . "</td>
+										<td style='vertical-align:middle;'>" . $row['userDesc'] . "</td>
+										<td style='vertical-align:middle;'><em>" . $problems[$row['ptype']] . "</em></td>
+										<td style='vertical-align:middle;'>
+											<form action='ticket.php' method='POST'>
+											<input type='hidden' name='tid[]' value='".$row['tid']."'>
+											<input type='image' name='sub' value='Edit Ticket' alt='Edit Ticket' src='../Resources/images/ic_mode_edit_black_24dp_1x.png'></form></div>
 										</td>
 										</form>
 									</tr>
 								");
 //										<td><a href='ticket.php?uid=" . $uid . "&tid[]=" . $row['tid'] . "'></a></td>
 							}
+							echo("
+								</tbody>
+								</table>
+							");
+
 						} else {
 							echo("<tr><td colspan=\"4\" class='alert alert-danger'>Couldn't find that user.</td></tr>");
 						}
 					} else {
-						echo("<tr><td colspan=\"4\" class='alert alert-danger'>Failed to get user info from server.</td></tr>");
+						echo("<tr><td colspan=\"4\" class='alert alert-danger'>You have been logged out.</td></tr>");
 					}
 
 					// Back button includes uid for dashboard
-					echo("<div class='well'><form action='ticket.php' method='POST'>
+					/* echo("<div class='well'><form action='ticket.php' method='POST'>
 					<input type='hidden' name='uid' value='". $uid ."'>
-					<input type='Submit' name='sub' value='Start a New Ticket'></form></div>");
+					<input type='Submit' name='sub' value='Start a New Ticket'></form></div>"); */
 
 					//trash the db connection
 					$database=null;
 				?>
-			</table>
 		</div>
 	</div>
 

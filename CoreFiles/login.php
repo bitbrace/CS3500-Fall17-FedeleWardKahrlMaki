@@ -30,7 +30,7 @@
 			exit(0);
 		}
 	}else{
-		$notice="<p>You cannot login with an insecure connection.</p>";
+		$notice="<p>You cannot log in with an insecure connection.</p>";
 	}
 
 ?>
@@ -44,17 +44,22 @@
 	</head>
 	<body>
 		<?php include "includes/header.inc.php";//INCLUDE HEADER ?>
-		<form class='center middle' action='login.php' method='POST'>
-			<fieldset>
-				<img class='middle' src='FIXME'/>
-				<p>Username:</p>
-				<input type='text' name='username' value=''>
-				<p>Password:</p>
-				<input type='text' name='password' value=''>
-				<input type='submit' value='Log In'>
-				<?php echo $notice;?>
-			<fieldset>
-		</form>
+		<div class="container">
+			<div class="panel">
+				<form action='login.php' method='POST'> <!-- class='center middle'  -->
+					<fieldset>
+						<!-- <img class='middle' src='FIXME'/> -->
+						<p>Username:</p>
+						<input type='text' name='username' value=''>
+						<p>Password:</p>
+						<input type='password' name='password' value=''>
+						<input type='submit' value='Log In'>
+						<?php echo $notice;?>
+					<fieldset>
+				</form>
+			</div>
+		</div>
+
 		<?php include "includes/footer.inc.php";//INCLUDE FOOTER ?>
 	</body>
 </html>
